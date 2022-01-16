@@ -169,7 +169,7 @@ const errorHandler = withErrorHandler({
 })
 
   // return a single error message no matter what!
-const errorHanl=dler = withErrorHandler({
+const errorHanldler = withErrorHandler({
   // parse the error and return this is something goes wrong
   returnValue: "you messed up!"
 })
