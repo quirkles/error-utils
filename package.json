@@ -6,8 +6,10 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "jest",
+    "lint": "eslint src",
     "compile-typescript": "tsc",
-    "build": "rm -rf dist && npm run compile-typescript"
+    "build": "rm -rf dist && npm run compile-tynpm set-script prepare \"husky install\"\npescript",
+    "prepare": "husky install"
   },
   "author": "quirkles",
   "license": "ISC",
@@ -27,6 +29,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-promise": "^5.2.0",
+    "husky": "^7.0.4",
     "jest": "^27.4.7",
     "prettier": "^2.5.1",
     "typescript": "^4.5.4"

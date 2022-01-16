@@ -2,7 +2,6 @@ import type { Request, Response } from 'express';
 import { withErrorHandler } from './express';
 import { BadRequestError } from '../errors/client-errors/BadRequestError';
 import { UpstreamServiceError } from '../errors/server-errors/UpstreamServiceError';
-import mock = jest.mock;
 
 const getMockRes = (): unknown => {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
