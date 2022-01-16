@@ -40,9 +40,7 @@ export function withErrorHandler(config?: ErrorHandlerMiddlewareConfig): ErrorRe
                     if (returnValue && returnValue.constructor.name.toLowerCase() === 'promise') {
                         returnValue = await returnValue;
                     }
-                } catch (err) {
-                    console.log(err) //eslint-disable-line
-                }
+                } catch {}
             } else {
                 returnValue = config.returnValue;
             }
