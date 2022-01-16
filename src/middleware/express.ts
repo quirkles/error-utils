@@ -37,7 +37,12 @@ export function withErrorHandler(config?: ErrorHandlerMiddlewareConfig): ErrorRe
             if (typeof config?.returnValue === 'function') {
                 try {
                     returnValue = config.returnValue.call(null, error);
-                } catch {}
+                    if (returnValue && returnValue.constructor.name.toLowerCase() === 'promise') {
+                        returnValue = await returnValue;
+                    }
+                } catch (err) {
+                    console.log(err) //eslint-disable-line
+                }
             } else {
                 returnValue = config.returnValue;
             }

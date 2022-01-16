@@ -33,6 +33,17 @@ describe('express middleware', () => {
             expect(mockResponse.json).toHaveBeenCalledWith({ error: 'oops' });
             expect(next).not.toHaveBeenCalled();
         });
+        it('custom client without statusCode', () => {
+            const middleware = withErrorHandler();
+            const mockResponse: Response = getMockRes() as Response;
+            const error = new BadRequestError('oops', { data: 'yes' });
+            delete error.statusCode;
+            const next = jest.fn();
+            middleware(error, {} as Request, mockResponse, next);
+            expect(mockResponse.status).toHaveBeenCalledWith(500);
+            expect(mockResponse.json).toHaveBeenCalledWith({ error: 'oops' });
+            expect(next).not.toHaveBeenCalled();
+        });
         it('custom server error', () => {
             const middleware = withErrorHandler();
             const mockResponse: Response = getMockRes() as Response;
@@ -66,6 +77,7 @@ describe('express middleware', () => {
             const next = jest.fn();
             middleware(error, {} as Request, mockResponse, next);
             expect(withError).toHaveBeenCalledWith(error);
+            expect(mockResponse.json).toHaveBeenCalledWith({ error: 'oops' });
         });
         it('standard js error, sync fn throws error', () => {
             const withError = jest.fn(() => {
@@ -79,8 +91,9 @@ describe('express middleware', () => {
             const next = jest.fn();
             middleware(error, {} as Request, mockResponse, next);
             expect(withError).toHaveBeenCalledWith(error);
+            expect(mockResponse.json).toHaveBeenCalledWith({ error: 'oops' });
         });
-        it('standard js error, async fn', () => {
+        it('standard js error, async fn', async () => {
             const withError = jest.fn(() => Promise.resolve('good!'));
             const error = new Error('oops');
             const middleware = withErrorHandler({
@@ -88,10 +101,13 @@ describe('express middleware', () => {
             });
             const mockResponse: Response = getMockRes() as Response;
             const next = jest.fn();
-            middleware(error, {} as Request, mockResponse, next);
+            await middleware(error, {} as Request, mockResponse, next);
             expect(withError).toHaveBeenCalledWith(error);
+            expect(mockResponse.json).toHaveBeenCalledWith({
+                error: 'oops',
+            });
         });
-        it('standard js error, async fn throws error', () => {
+        it('standard js error, async fn throws error', async () => {
             const withError = jest.fn(() => Promise.reject(new Error()));
             const error = new Error('oops');
             const middleware = withErrorHandler({
@@ -99,8 +115,11 @@ describe('express middleware', () => {
             });
             const mockResponse: Response = getMockRes() as Response;
             const next = jest.fn();
-            middleware(error, {} as Request, mockResponse, next);
+            await middleware(error, {} as Request, mockResponse, next);
             expect(withError).toHaveBeenCalledWith(error);
+            expect(mockResponse.json).toHaveBeenCalledWith({
+                error: 'oops',
+            });
         });
         it('custom client error', () => {
             const withError = jest.fn();
@@ -137,8 +156,10 @@ describe('express middleware', () => {
             middleware(error, {} as Request, mockResponse, next);
             expect(mockResponse.json).toHaveBeenCalledWith(returnValue);
         });
-        it('function', () => {
-            const returnValue = jest.fn();
+        it('function, sync', () => {
+            const returnValue = jest.fn((err) => ({
+                thrownError: err,
+            }));
             const error = new Error('oops');
             const middleware = withErrorHandler({
                 returnValue: returnValue as any,
@@ -147,6 +168,55 @@ describe('express middleware', () => {
             const next = jest.fn();
             middleware(error, {} as Request, mockResponse, next);
             expect(returnValue).toHaveBeenCalledWith(error);
+            expect(mockResponse.json).toHaveBeenCalledWith({ thrownError: error });
+        });
+        it('function, sync, throws error, falls back to default', () => {
+            const returnValue = jest.fn(() => {
+                throw new Error();
+            });
+            const error = new Error('oops');
+            const middleware = withErrorHandler({
+                returnValue: returnValue as any,
+            });
+            const mockResponse: Response = getMockRes() as Response;
+            const next = jest.fn();
+            middleware(error, {} as Request, mockResponse, next);
+            expect(returnValue).toHaveBeenCalledWith(error);
+            expect(mockResponse.json).toHaveBeenCalledWith({ error: 'oops' });
+        });
+        it('function, async', async () => {
+            const returnValue = jest.fn((err) =>
+                Promise.resolve({
+                    thrownError: err,
+                }),
+            );
+            const error = new Error('oops');
+            const middleware = withErrorHandler({
+                returnValue: returnValue as any,
+            });
+            const mockResponse: Response = getMockRes() as Response;
+            const next = jest.fn();
+            await middleware(error, {} as Request, mockResponse, next);
+            expect(returnValue).toHaveBeenCalledWith(error);
+            expect(mockResponse.json).toHaveBeenCalledWith({
+                thrownError: error,
+            });
+        });
+        it('function, sync, throws error, falls back to default', async () => {
+            const returnValue = jest.fn(() => {
+                throw new Error();
+            });
+            const error = new Error('oops');
+            const middleware = withErrorHandler({
+                returnValue: returnValue as any,
+            });
+            const mockResponse: Response = getMockRes() as Response;
+            const next = jest.fn();
+            await middleware(error, {} as Request, mockResponse, next);
+            expect(returnValue).toHaveBeenCalledWith(error);
+            expect(mockResponse.json).toHaveBeenCalledWith({
+                error: 'oops',
+            });
         });
     });
 });
