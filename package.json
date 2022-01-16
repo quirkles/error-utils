@@ -1,11 +1,14 @@
 {
-  "name": "custom-errors",
+  "name": "custom-error-utils",
   "version": "1.0.0",
   "description": "contains definitions for custom errors and error types",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "jest",
-    "compile-typescript": "tsc"
+    "compile-typescript": "tsc",
+    "build": "rm -rf dist && npm run compile-typescript",
+    "publish": "npm publish"
   },
   "author": "quirkles",
   "license": "ISC",

@@ -1,1 +1,1 @@
-export const fn = (): null => null;
+export { withErrorHandler } from './middleware';

@@ -4,8 +4,8 @@ import { CustomError } from '../errors/CustomError';
 type GetReturnValueFromError = (err: Error | CustomError) => Record<string, unknown>;
 
 interface ErrorHandlerMiddlewareConfig {
-    withError(err: Error): void | Promise<void>;
-    returnValue: GetReturnValueFromError | Record<string, unknown>;
+    withError?(err: Error): void | Promise<void>;
+    returnValue?: GetReturnValueFromError | Record<string, unknown>;
 }
 
 export function withErrorHandler(config?: ErrorHandlerMiddlewareConfig): ErrorRequestHandler {
