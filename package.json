@@ -1,6 +1,6 @@
 {
   "name": "custom-error-utils",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "contains definitions for custom errors and error types",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
