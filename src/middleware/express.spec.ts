@@ -56,7 +56,7 @@ describe('express middleware', () => {
         });
     });
     describe('with custom error handling function', () => {
-        it('standard js error', () => {
+        it('standard js error, sync fn', () => {
             const withError = jest.fn();
             const error = new Error('oops');
             const middleware = withErrorHandler({
@@ -67,7 +67,42 @@ describe('express middleware', () => {
             middleware(error, {} as Request, mockResponse, next);
             expect(withError).toHaveBeenCalledWith(error);
         });
-        it('works with no arguments, custom client error', () => {
+        it('standard js error, sync fn throws error', () => {
+            const withError = jest.fn(() => {
+                throw new Error();
+            });
+            const error = new Error('oops');
+            const middleware = withErrorHandler({
+                withError: withError as any,
+            });
+            const mockResponse: Response = getMockRes() as Response;
+            const next = jest.fn();
+            middleware(error, {} as Request, mockResponse, next);
+            expect(withError).toHaveBeenCalledWith(error);
+        });
+        it('standard js error, async fn', () => {
+            const withError = jest.fn(() => Promise.resolve('good!'));
+            const error = new Error('oops');
+            const middleware = withErrorHandler({
+                withError: withError as any,
+            });
+            const mockResponse: Response = getMockRes() as Response;
+            const next = jest.fn();
+            middleware(error, {} as Request, mockResponse, next);
+            expect(withError).toHaveBeenCalledWith(error);
+        });
+        it('standard js error, async fn throws error', () => {
+            const withError = jest.fn(() => Promise.reject(new Error()));
+            const error = new Error('oops');
+            const middleware = withErrorHandler({
+                withError: withError as any,
+            });
+            const mockResponse: Response = getMockRes() as Response;
+            const next = jest.fn();
+            middleware(error, {} as Request, mockResponse, next);
+            expect(withError).toHaveBeenCalledWith(error);
+        });
+        it('custom client error', () => {
             const withError = jest.fn();
             const error = new BadRequestError('oops', { thing: true });
             const middleware = withErrorHandler({
@@ -78,7 +113,7 @@ describe('express middleware', () => {
             middleware(error, {} as Request, mockResponse, next);
             expect(withError).toHaveBeenCalledWith(error);
         });
-        it('works with no arguments, custom server error', () => {
+        it('custom server error', () => {
             const withError = jest.fn();
             const error = new UpstreamServiceError('oops', 'google');
             const middleware = withErrorHandler({
