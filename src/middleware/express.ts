@@ -8,7 +8,7 @@ interface ErrorHandlerMiddlewareConfig {
     returnValue: GetReturnValueFromError | Record<string, unknown>;
 }
 
-export function useErrorHandler(config?: ErrorHandlerMiddlewareConfig): ErrorRequestHandler {
+export function withErrorHandler(config?: ErrorHandlerMiddlewareConfig): ErrorRequestHandler {
     async function errorHandler(error: Error | CustomError, req: Request, res: Response, next: NextFunction) {
         if (res.headersSent) {
             // if the headers have been sent we need to delegate to the express default error handler

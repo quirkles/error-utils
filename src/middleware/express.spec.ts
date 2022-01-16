@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express';
-import { useErrorHandler } from './express';
+import { withErrorHandler } from './express';
 
 const getMockRes = (): unknown => {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
@@ -12,7 +12,7 @@ const getMockRes = (): unknown => {
 
 describe('express middleware', () => {
     it('works with no arguments, standard js error', () => {
-        const middleware = useErrorHandler();
+        const middleware = withErrorHandler();
         const mockResponse: Response = getMockRes() as Response;
         const error = new Error('oops');
         const next = jest.fn();
