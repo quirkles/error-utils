@@ -9,7 +9,7 @@ interface ErrorHandlerMiddlewareConfig {
 }
 
 export function withErrorHandler(config?: ErrorHandlerMiddlewareConfig): ErrorRequestHandler {
-    async function errorHandler(error: Error | CustomError, req: Request, res: Response, next: NextFunction) {
+    return async function errorHandler(error: Error | CustomError, req: Request, res: Response, next: NextFunction) {
         if (res.headersSent) {
             // if the headers have been sent we need to delegate to the express default error handler
             return next(error);
@@ -44,6 +44,5 @@ export function withErrorHandler(config?: ErrorHandlerMiddlewareConfig): ErrorRe
         }
 
         return res.json(returnValue);
-    }
-    return errorHandler;
+    };
 }

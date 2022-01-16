@@ -175,6 +175,8 @@ const errorHanldler = withErrorHandler({
 })
 ```
 
+Note: If `returnValue` is a function and that function throws an error, the middleware will fall back to the default return message and do so silently! 
+
 The middleware can also accept a `withError` function, this lets you do some arbitrary thing with the error before returning.
 
 ```javascript
@@ -204,3 +206,5 @@ const errorHandler = withErrorHandler({
   withError: errorLogger
 })
 ```
+
+Note: If `withError` throws an error, that error will be swallowed SILENTLY! This is to ensure the express middleware chain completes as expected.
