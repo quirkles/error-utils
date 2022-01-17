@@ -1,7 +1,6 @@
 import type { Request, Response } from 'express';
 import { withErrorHandler } from './express';
-import { BadRequestError } from '../errors/client-errors/BadRequestError';
-import { UpstreamServiceError } from '../errors/server-errors/UpstreamServiceError';
+import { BadRequestError, UpstreamServiceError } from '../errors';
 
 const getMockRes = (): unknown => {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
@@ -37,7 +36,7 @@ describe('express middleware', () => {
             const middleware = withErrorHandler();
             const mockResponse: Response = getMockRes() as Response;
             const error = new BadRequestError('oops', { data: 'yes' });
-            delete error.statusCode;
+            delete (error as any).statusCode;
             const next = jest.fn();
             middleware(error, {} as Request, mockResponse, next);
             expect(mockResponse.status).toHaveBeenCalledWith(500);

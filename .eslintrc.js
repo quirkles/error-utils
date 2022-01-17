@@ -12,7 +12,9 @@ module.exports = {
         '@typescript-eslint', // Uses the recommended rules from the @typescript-eslint/eslint-plugin
         'prettier', // Enables eslint-plugin-prettier and eslint-config-prettier. This will display prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array.
     ],
-    rules: {},
+    rules: {
+        '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    },
     overrides: [
         {
             files: ['**/*.spec.ts'],
