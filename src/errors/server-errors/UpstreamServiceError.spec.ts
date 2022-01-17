@@ -2,7 +2,7 @@ import { UpstreamServiceError } from './UpstreamServiceError';
 import { ServerError } from './ServerError';
 import { CustomError } from '../CustomError';
 import { StatusCodes } from '../../statusCodes';
-import { ClientError } from '../client-errors/ClientError';
+import { ClientError } from '../client-errors';
 
 function throwsError(message: string) {
     throw new UpstreamServiceError(message);

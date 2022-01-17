@@ -1,7 +1,7 @@
 import { NotFoundError } from './NotFoundError';
 import { ClientError } from './ClientError';
 import { CustomError } from '../CustomError';
-import { ServerError } from '../server-errors/ServerError';
+import { ServerError } from '../server-errors';
 import { StatusCodes } from '../../statusCodes';
 
 function throwsError(message: string) {

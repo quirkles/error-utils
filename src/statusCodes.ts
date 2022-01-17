@@ -63,7 +63,7 @@ export enum StatusCodes {
     /**
      * Official Documentation @ https://tools.ietf.org/html/rfc7231#section-6.5.9
      *
-     * This response would be sent when the requested content has been permenantly deleted from server, with no forwarding address. Clients are expected to remove their caches and links to the resource. The HTTP specification intends this status code to be used for "limited-time, promotional services". APIs should not feel compelled to indicate resources that have been deleted with this status code.
+     * This response would be sent when the requested content has been permanently deleted from server, with no forwarding address. Clients are expected to remove their caches and links to the resource. The HTTP specification intends this status code to be used for "limited-time, promotional services". APIs should not feel compelled to indicate resources that have been deleted with this status code.
      */
     GONE = 410,
     /**
@@ -172,7 +172,7 @@ export enum StatusCodes {
     /**
      * Official Documentation @ https://tools.ietf.org/html/rfc7231#section-6.5.4
      *
-     * The server can not find requested resource. In the browser, this means the URL is not recognized. In an API, this can also mean that the endpoint is valid but the resource itself does not exist. Servers may also send this response instead of 403 to hide the existence of a resource from an unauthorized client. This response code is probably the most famous one due to its frequent occurence on the web.
+     * The server can not find requested resource. In the browser, this means the URL is not recognized. In an API, this can also mean that the endpoint is valid but the resource itself does not exist. Servers may also send this response instead of 403 to hide the existence of a resource from an unauthorized client. This response code is probably the most famous one due to its frequent occurrence on the web.
      */
     NOT_FOUND = 404,
     /**
@@ -254,7 +254,7 @@ export enum StatusCodes {
     /**
      * Official Documentation @ https://tools.ietf.org/html/rfc7231#section-6.5.11
      *
-     * Request entity is larger than limits defined by server; the server might close the connection or return an Retry-After header field.
+     * Request entity is larger than limits defined by server; the server might close the connection or return a Retry-After header field.
      */
     REQUEST_TOO_LONG = 413,
     /**
@@ -284,7 +284,7 @@ export enum StatusCodes {
     /**
      * Official Documentation @ https://tools.ietf.org/html/rfc7231#section-6.6.4
      *
-     * The server is not ready to handle the request. Common causes are a server that is down for maintenance or that is overloaded. Note that together with this response, a user-friendly page explaining the problem should be sent. This responses should be used for temporary conditions and the Retry-After: HTTP header should, if possible, contain the estimated time before the recovery of the service. The webmaster must also take care about the caching-related headers that are sent along with this response, as these temporary condition responses should usually not be cached.
+     * The server is not ready to handle the request. Common causes are a server that is down for maintenance or that is overloaded. Note that together with this response, a user-friendly page explaining the problem should be sent. These responses should be used for temporary conditions and the Retry-After: HTTP header should, if possible, contain the estimated time before the recovery of the service. The webmaster must also take care about the caching-related headers that are sent along with this response, as these temporary condition responses should usually not be cached.
      */
     SERVICE_UNAVAILABLE = 503,
     /**
@@ -296,7 +296,7 @@ export enum StatusCodes {
     /**
      * Official Documentation @ https://tools.ietf.org/html/rfc7231#section-6.4.7
      *
-     * Server sent this response to directing client to get requested resource to another URI with same method that used prior request. This has the same semantic than the 302 Found HTTP response code, with the exception that the user agent must not change the HTTP method used: if a POST was used in the first request, a POST must be used in the second request.
+     * Server sent this response to directing client to get requested resource to another URI with same method that used prior request. This has the same semantic as the 302 Found HTTP response code, with the exception that the user agent must not change the HTTP method used: if a POST was used in the first request, a POST must be used in the second request.
      */
     TEMPORARY_REDIRECT = 307,
     /**

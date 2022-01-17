@@ -2,7 +2,7 @@ import { InternalServerError } from './InternalServerError';
 import { ServerError } from './ServerError';
 import { CustomError } from '../CustomError';
 import { StatusCodes } from '../../statusCodes';
-import { ClientError } from '../client-errors/ClientError';
+import { ClientError } from '../client-errors';
 
 function throwsError(message: string) {
     throw new InternalServerError(message);
