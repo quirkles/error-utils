@@ -7,7 +7,7 @@
   "scripts": {
     "test": "jest",
     "lint": "eslint src",
-    "compile-typescript": "tsc",
+    "compile-typescript": "tsc -p tsconfig.build.json",
     "build": "rm -rf dist && npm run compile-tynpm set-script prepare \"husky install\"\npescript",
     "prepare": "husky install"
   },
